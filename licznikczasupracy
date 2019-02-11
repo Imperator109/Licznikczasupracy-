@@ -1,0 +1,84 @@
+from tkinter import *
+import time
+
+
+
+
+def main():
+    class Pomotodo():
+
+        def __init__(self):
+            self.oknoglowne=Tk()
+            self.oknoglowne.title('Licznik Pomotodo')
+            self.oknoglowne.wm_geometry('300x300')
+            self.Label1=Label(text='Ile minut chcesz pracować?')
+            self.Label1.pack()
+            self.czas=Entry()
+            self.czas.pack()
+            self.Button=Button(text='START', command=self.pobierz)
+            self.Button.pack()
+            self.oknoglowne.mainloop()
+
+            self.noweokno()
+            self.okno3()
+
+
+        def pobierz(self):
+            self.f = self.czas.get()
+            self.f=int(self.f)*60
+            self.oknoglowne.destroy()
+
+
+        def noweokno(self):
+            self.noweokno=Tk()
+            self.noweokno.title('Bez pracy nie ma kołaczy!')
+            self.noweokno.wm_geometry('300x300')
+            self.Label2=Label(text='Pozostalo czasu:')
+            self.Label2.pack()
+            self.Label3=Label(text=self.f)
+            self.Label3.pack()
+            self.update_clock()
+
+
+        def update_clock(self):
+            self.i=int(self.f)
+            while self.i>0:
+                self.f=int(self.f)-1
+                self.Label3.configure(text=self.f)
+                self.Label3.after(1000, self.update_clock)
+                self.noweokno.mainloop()
+            try:
+                self.noweokno.destroy()
+            except:
+                pass
+
+
+        def okno3(self):
+            self.okno3=Tk()
+            self.okno3.wm_geometry('300x300')
+            self.okno3.title('Koniec pracy')
+            self.Label5=Label(text='KONIEC PRACY!')
+            self.Label5.pack()
+            self.okno3.configure(background='grey')
+            photo=PhotoImage(file='C:/images.gif')
+            self.Label4=Label(image=photo)
+            self.Label4.pack()
+
+            self.Button2=Button(text='Zamknij aplikację', command=self.zamknij_aplikacje)
+            self.Button2.place(x=10, y=250)
+            self.Button3=Button(text='Zacznij pracę od nowa!', command=self.zacznij_od_nowa)
+            self.Button3.place(x=180, y=250)
+            self.okno3.mainloop()
+
+
+        def zamknij_aplikacje(self):
+            self.okno3.destroy()
+
+        def zacznij_od_nowa(self):
+            self.okno3.destroy()
+            Pomotodo()
+            return 0
+    tk=Pomotodo()
+
+if __name__== '__main__':
+    main()
